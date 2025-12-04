@@ -268,12 +268,103 @@
       .wrapper { padding-top: 100px; }
       .story::before { left: -20px; }
     }
+    
+  /* Mobile Responsive Styles */
+  @media (max-width: 768px) {
+    header {
+      padding: 10px 14px;
+    }
+    
+    .wrapper {
+      padding-top: 80px;
+      padding-left: 20px;
+      padding-right: 20px;
+    }
+    
+    .brand-wrap {
+      gap: 8px;
+    }
+    
+    .brand-logo {
+      height: 32px;
+      width: 32px;
+    }
+    
+    .brand {
+      font-size: clamp(1.2rem, 4vw, 1.5rem);
+    }
+    
+    .hero {
+      padding: 60px 0;
+    }
+    
+    .hero h1 {
+      font-size: clamp(2rem, 8vw, 3rem);
+      line-height: 1.2;
+    }
+    
+    .hero-visual {
+      height: 60vh;
+    }
+    
+    .list-cards {
+      grid-template-columns: 1fr;
+      gap: 12px;
+      margin-top: 14px;
+    }
+    
+    .bio-section {
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 20px;
+    }
+    
+    .bio-section img {
+      margin: 0;
+    }
+    
+    .cta {
+      font-size: 1rem;
+      padding: 14px 28px;
+    }
+    
+    .lang-toggle button {
+      font-size: 0.9rem;
+      padding: 6px 12px;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .wrapper {
+      padding-top: 70px;
+      padding-left: 16px;
+      padding-right: 16px;
+    }
+    
+    .brand {
+      font-size: 1.1rem;
+    }
+    
+    .hero h1 {
+      font-size: 1.8rem;
+    }
+    
+    .hero-visual {
+      height: 50vh;
+    }
+    
+    .bio-section img {
+      width: 120px;
+      height: 180px;
+    }
+  }
   </style>
 </head>
 <body>
   <header>
     <div class="brand-wrap">
-      <img src="Assets/Optopia Eye.jpg" alt="Optopia logo" class="brand-logo">
+      <video src="Assets/Optopia Eye.mp4" alt="Optopia logo" class="brand-logo" autoplay muted loop playsinline></video>
       <div class="brand" data-i18n="brand">Multimodal Workshop</div>
     </div>
     <div class="lang-toggle" aria-label="Language switcher">
