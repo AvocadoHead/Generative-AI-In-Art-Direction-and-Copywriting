@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="he">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -261,122 +261,132 @@
       gap: 16px;
       margin-top: 18px;
     }
+
+    /* NEW: base bio section layout */
+    .bio-section {
+      display: flex;
+      gap: 24px;
+      align-items: flex-start;
+    }
+
     .anim { opacity: 0; transform: translateY(30px); transition: opacity 0.8s ease, transform 0.8s ease; }
     .anim.visible { opacity: 1; transform: translateY(0); }
+
     @media (max-width: 720px) {
       header { padding: 14px 18px; }
       .wrapper { padding-top: 100px; }
       .story::before { left: -20px; }
     }
     
-  /* Mobile Responsive Styles */
-  @media (max-width: 768px) {
-    header {
-      padding: 10px 14px;
+    /* Mobile Responsive Styles */
+    @media (max-width: 768px) {
+      header {
+        padding: 10px 14px;
+      }
+      
+      .wrapper {
+        padding-top: 80px;
+        padding-left: 20px;
+        padding-right: 20px;
+      }
+      
+      .brand-wrap {
+        gap: 8px;
+      }
+      
+      .brand-logo {
+        height: 32px;
+        width: 32px;
+      }
+      
+      .brand {
+        font-size: clamp(1.2rem, 4vw, 1.5rem);
+      }
+      
+      .hero {
+        padding: 60px 0;
+      }
+      
+      .hero h1 {
+        font-size: clamp(2rem, 8vw, 3rem);
+        line-height: 1.2;
+      }
+      
+      .hero-visual {
+        height: 60vh;
+      }
+      
+      .list-cards {
+        grid-template-columns: 1fr;
+        gap: 12px;
+        margin-top: 14px;
+      }
+      
+      .bio-section {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        gap: 20px;
+      }
+      
+      .bio-section img {
+        margin: 0;
+      }
+      
+      .cta {
+        font-size: 1rem;
+        padding: 14px 28px;
+      }
+      
+      .lang-toggle button {
+        font-size: 0.9rem;
+        padding: 6px 12px;
+      }
     }
     
-    .wrapper {
-      padding-top: 80px;
-      padding-left: 20px;
-      padding-right: 20px;
+    @media (max-width: 480px) {
+      .wrapper {
+        padding-top: 70px;
+        padding-left: 16px;
+        padding-right: 16px;
+      }
+      
+      .brand {
+        font-size: 1.1rem;
+      }
+      
+      .hero h1 {
+        font-size: 1.8rem;
+      }
+      
+      .hero-visual {
+        height: 50vh;
+      }
+      
+      .bio-section img {
+        width: 120px;
+        height: 180px;
+      }
     }
-    
-    .brand-wrap {
-      gap: 8px;
-    }
-    
-    .brand-logo {
-      height: 32px;
-      width: 32px;
-    }
-    
-    .brand {
-      font-size: clamp(1.2rem, 4vw, 1.5rem);
-    }
-    
-    .hero {
-      padding: 60px 0;
-    }
-    
-    .hero h1 {
-      font-size: clamp(2rem, 8vw, 3rem);
-      line-height: 1.2;
-    }
-    
-    .hero-visual {
-      height: 60vh;
-    }
-    
-    .list-cards {
-      grid-template-columns: 1fr;
-      gap: 12px;
-      margin-top: 14px;
-    }
-    
-    .bio-section {
-      flex-direction: column;
-      align-items: center;
-      text-align: center;
-      gap: 20px;
-    }
-    
-    .bio-section img {
-      margin: 0;
-    }
-    
-    .cta {
-      font-size: 1rem;
-      padding: 14px 28px;
-    }
-    
-    .lang-toggle button {
-      font-size: 0.9rem;
-      padding: 6px 12px;
-    }
-  }
-  
-  @media (max-width: 480px) {
-    .wrapper {
-      padding-top: 70px;
-      padding-left: 16px;
-      padding-right: 16px;
-    }
-    
-    .brand {
-      font-size: 1.1rem;
-    }
-    
-    .hero h1 {
-      font-size: 1.8rem;
-    }
-    
-    .hero-visual {
-      height: 50vh;
-    }
-    
-    .bio-section img {
-      width: 120px;
-      height: 180px;
-    }
-  }
   </style>
 </head>
 <body>
   <header>
     <div class="brand-wrap">
       <video src="Assets/Optopia Eye.mp4" alt="Optopia logo" class="brand-logo" autoplay muted loop playsinline></video>
-      <div class="brand" data-i18n="brand">Multimodal Workshop</div>
+      <div class="brand" data-i18n="brand">Crack the Brief | a Workshop in Multimodal Strategies</div>
     </div>
     <div class="lang-toggle" aria-label="Language switcher">
-      <button class="active" data-lang="en">EN</button>
-      <button data-lang="he">HE</button>
+      <button data-lang="en">EN</button>
+      <button class="active" data-lang="he">HE</button>
     </div>
   </header>
 
   <main class="wrapper">
     <section class="hero anim">
       <div>
-        <div class="pill" data-i18n="hero.label">Immersive Workshop</div>
+        <!-- pill now just "Paradigme" -->
+        <div class="pill" data-i18n="hero.label">Paradigme</div>
         <h1 data-i18n="hero.title">Everything happens at once.</h1>
         <p data-i18n="hero.subtitle">
           Cracking the brief in the multimodal space. A deep-dive workshop in strategy, creative,
@@ -392,8 +402,9 @@
     <section class="anim" id="shift">
       <div class="grid-two">
         <div>
+          <!-- pill now Paradigme, not repeating the title -->
           <div class="pill" data-i18n="shift.label">
-            The shift: from “copy here, visual there” to one unified canvas.
+            Paradigme
           </div>
           <h2 data-i18n="shift.title">
             The shift: from “copy here, visual there” to one unified canvas.
@@ -415,7 +426,8 @@
     </section>
 
     <section class="anim" id="methodology">
-      <div class="pill" data-i18n="method.label">The methodology: from brief to video in 4 movements.</div>
+      <!-- pill now "Recipe" -->
+      <div class="pill" data-i18n="method.label">Recipe</div>
       <h2 data-i18n="method.title">The methodology: from brief to video in 4 movements.</h2>
       <p data-i18n="method.intro">A structured workflow that turns creative chaos into a precise pipeline.</p>
       <div class="method-grid">
@@ -505,15 +517,16 @@
 
     <section class="anim" id="bio">
       <div class="card">
-        <div style="display: flex; gap: 24px; align-items: flex-start;">
+        <div class="bio-section">
           <img
             src="Assets/Self PR Image 051125 .png"
             alt="Eyal Izenman"
             style="width: 140px; height: 210px; border-radius: 12px; object-fit: cover; flex-shrink: 0;"
           >
           <div>
-            <div class="pill" data-i18n="bio.label">About the facilitator – איל איזנמן</div>
-            <h2 data-i18n="bio.title">About the facilitator – איל איזנמן</h2>
+            <!-- pill + title updated to About me -->
+            <div class="pill" data-i18n="bio.label">About me</div>
+            <h2 data-i18n="bio.title">Eyal Izenman</h2>
             <p data-i18n="bio.body">
               Creator, animator, motion designer, and thought leader in the Generative AI space. With decades of experience
               weaving together music, design, and movement, איל איזנמן is one of the leading voices in Israel at the
@@ -549,11 +562,11 @@
     const translations = {
       en: {
         'brand': 'Multimodal Workshop',
-        'hero.label': 'Immersive Workshop',
+        'hero.label': 'Paradigme',
         'hero.title': 'Everything happens at once.',
         'hero.subtitle':
           'Cracking the brief in the multimodal space. A deep-dive workshop in strategy, creative, and visual development in the age of Generative AI.',
-        'shift.label': 'The shift: from “copy here, visual there” to one unified canvas.',
+        'shift.label': 'Paradigme',
         'shift.title': 'The shift: from “copy here, visual there” to one unified canvas.',
         'shift.body1':
           'Most of the industry still works in a “divide and fragment” mindset. Copy in one tab, images in another, and the original brief gets lost somewhere in the middle. The result: friction. Too many technical handoffs, not enough continuous creation.',
@@ -598,10 +611,10 @@
         'value.body2': 'Full control over the brief, the language, and the final output.',
         'value.body3': 'A tool-agnostic methodology that will not break the moment platforms change.',
         'value.body4': 'The ability to lead – to show clients a deep process, not just a pretty result.',
-        'bio.label': 'About the facilitator – איל איזנמן',
-        'bio.title': 'About the facilitator – איל איזנמן',
+        'bio.label': 'About me',
+        'bio.title': 'About me – Eyal Izenman',
         'bio.body':
-          'Creator, animator, motion designer, and thought leader in the Generative AI space. With decades of experience weaving together music, design, and movement, איל איזנמן is one of the leading voices in Israel at the intersection of human creativity and artificial intelligence.',
+          'Creator, animator, motion designer, and thought leader in the Generative AI space. With decades of experience weaving together music, design, and movement, Eyal Izenman is one of the leading voices in Israel at the intersection of human creativity and artificial intelligence.',
         'bio.quote':
           '“AI is not a tech trick – it is a full creative space. My goal is to help you surface the idea, refine it, and turn it into a complete visual asset – in one continuous breath.”',
         'cta.line':
@@ -609,18 +622,18 @@
         'cta.button': 'Contact'
       },
       he: {
-        'brand': 'סדנה מולטימודלית',
-        'hero.label': 'סדנת עומק',
+        'brand': 'לפצח את הבריף | סדנה לאסטרטגיות מולטימודליות',
+        'hero.label': 'פרדיגמה',
         'hero.title': 'הכול קורה בבת־אחת.',
         'hero.subtitle':
           'לפצח את הבריף במרחב המולטי־מודאלי. סדנת עומק לאסטרטגיה, קריאייטיב ופיתוח ויזואלי בעידן ה-Generative AI.',
-        'shift.label': 'השינוי: מ"קופי כאן, ויז׳ואל שם" לקנבס אחד מאוחד.',
+        'shift.label': 'פרדיגמה',
         'shift.title': 'השינוי: מ"קופי כאן, ויז׳ואל שם" לקנבס אחד מאוחד.',
         'shift.body1':
           'רוב התעשייה עדיין עובדת בשיטת "הפרד ומשול". טקסט בטאב אחד, תמונה בטאב שני, והבריף המקורי הולך לאיבוד איפשהו באמצע. התוצאה? חיכוך. הרבה מעברים טכניים, ומעט מדי יצירה רציפה.',
         'shift.body2':
           'אנחנו עוברים למודל עבודה אחוד. תשכחו מפינג-פונג בין כלים. הסדנה מציגה עבודה על קנבס גנרטיבי אחד: מרחב שבו המילה הכתובה, האסטרטגיה והפלט הגרפי מתהווים במקביל. זה לא משנה אם אתם עובדים ב-Krea, ComfyUI או Runway – השינוי הוא בראש, לא בכלי.',
-        'method.label': 'המתודולוגיה: מהבריף ועד וידאו ב-4 תנועות.',
+        'method.label': 'מתכון',
         'method.title': 'המתודולוגיה: מהבריף ועד וידאו ב-4 תנועות.',
         'method.intro': 'זרימה סדורה שהופכת כאוס יצירתי לפייפליין מדויק.',
         'method.steps.0.title': 'פירוק (Deconstruction) // להבין את ה-DNA',
@@ -654,8 +667,8 @@
           'מתודולוגיה אגנוסטית – כזו שלא תלויה בפלטפורמה אחת שתתחלף מחר בבוקר.',
         'value.body4':
           'יכולת הובלה – להציג ללקוח תהליך עומק, ולא רק תוצאה יפה.',
-        'bio.label': 'על המנחה איל איזנמן',
-        'bio.title': 'על המנחה איל איזנמן',
+        'bio.label': 'עליי',
+        'bio.title': 'איל איזנמן',
         'bio.body':
           'יוצר, אנימטור, מעצב תנועה ומוביל דעה בתחום ה-Generative AI. עם עשרות שנים של ניסיון בחיבור בין מוזיקה, עיצוב ותנועה, איל איזנמן הוא מהקולות הבולטים בישראל בסינתזה שבין יצירה אנושית לבינה מלאכותית.',
         'bio.quote':
@@ -666,7 +679,7 @@
       }
     };
 
-    function applyTranslations(lang = 'en') {
+    function applyTranslations(lang = 'he') {
       const map = translations[lang];
       if (!map) return;
 
@@ -687,7 +700,8 @@
       btn.addEventListener('click', () => applyTranslations(btn.dataset.lang));
     });
 
-    applyTranslations('en');
+    // Start in Hebrew
+    applyTranslations('he');
 
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
