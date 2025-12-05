@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="he">
+<html lang="he" dir="rtl">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -48,38 +48,38 @@
     body::after {
       content: "";
       position: fixed;
-      inset: -20% -10% auto;
-      height: 70vh;
+      inset: -25% -15% auto;
+      height: 80vh;
       background:
         radial-gradient(
-          circle at 20% 20%,
-          rgba(255, 214, 166, 0.6),
-          transparent 50%
+          circle at 15% 20%,
+          rgba(255, 214, 166, 0.9),
+          transparent 55%
         ),
         radial-gradient(
-          circle at 80% 60%,
-          rgba(255, 159, 85, 0.28),
-          transparent 50%
+          circle at 85% 70%,
+          rgba(255, 159, 85, 0.6),
+          transparent 55%
         );
       filter: blur(40px);
-      opacity: 0.8;
+      opacity: 0.9;
       animation: floatBlob 28s ease-in-out infinite;
       pointer-events: none;
       z-index: 0;
     }
 
     body::after {
-      inset: 10% -30% -10% auto;
+      inset: 5% -30% -15% auto;
       background:
         radial-gradient(
           circle at 70% 20%,
-          rgba(255, 128, 171, 0.38),
+          rgba(255, 128, 171, 0.7),
           transparent 55%
         ),
         radial-gradient(
-          circle at 20% 70%,
-          rgba(255, 238, 188, 0.45),
-          transparent 50%
+          circle at 20% 80%,
+          rgba(255, 238, 188, 0.7),
+          transparent 55%
         );
       animation-duration: 36s;
       animation-delay: -8s;
@@ -87,8 +87,8 @@
     }
 
     @keyframes floatBlob {
-      0% { transform: translate3d(0, 0, 0) scale(1); }
-      50% { transform: translate3d(-3%, 4%, 0) scale(1.08); }
+      0%   { transform: translate3d(0, 0, 0) scale(1); }
+      50%  { transform: translate3d(-3%, 4%, 0) scale(1.08); }
       100% { transform: translate3d(2%, -3%, 0) scale(1); }
     }
 
@@ -314,7 +314,7 @@
       box-shadow: 0 24px 50px rgba(255, 159, 85, 0.38);
     }
 
-    /* ORIGINAL HERO VISUAL + ORBITAL FRAME + FLOATING BLOBS */
+    /* HERO VISUAL AS CONTAINER FOR CANVAS */
     .hero-visual {
       height: 420px;
       border-radius: 22px;
@@ -356,6 +356,7 @@
       );
       filter: blur(14px);
       animation: float 9s ease-in-out infinite;
+      pointer-events: none;
     }
 
     .hero-visual::before {
@@ -370,27 +371,10 @@
       animation-delay: -0.7s;
     }
 
-    .orbital {
-      position: absolute;
-      inset: 18%;
-      border-radius: 28px;
-      border: 1px solid rgba(255, 181, 107, 0.4);
-      box-shadow: inset 0 0 20px rgba(255, 181, 107, 0.26);
-      backdrop-filter: blur(2px);
-      animation: rotate 18s linear infinite;
-      opacity: 0.75;
-      pointer-events: none;
-    }
-
     @keyframes float {
       0%,
       100% { transform: translateY(0); }
       50% { transform: translateY(-12px); }
-    }
-
-    @keyframes rotate {
-      from { transform: rotate(0deg); }
-      to { transform: rotate(360deg); }
     }
 
     .anim {
@@ -404,48 +388,61 @@
       transform: translateY(0);
     }
 
-    /* MOBILE */
+    /* RTL alignment when document is RTL */
+    html[dir="rtl"] body {
+      direction: rtl;
+    }
+
+    html[dir="rtl"] p,
+    html[dir="rtl"] h1,
+    html[dir="rtl"] h2,
+    html[dir="rtl"] h3,
+    html[dir="rtl"] .brand {
+      text-align: right;
+    }
+
+    html[dir="ltr"] p,
+    html[dir="ltr"] h1,
+    html[dir="ltr"] h2,
+    html[dir="ltr"] h3,
+    html[dir="ltr"] .brand {
+      text-align: left;
+    }
+
+    /* MOBILE styles */
     @media (max-width: 768px) {
       header {
         padding: 10px 14px;
       }
-
       .wrapper {
         padding-top: 80px;
         padding-left: 20px;
         padding-right: 20px;
       }
-
       .brand-logo {
         height: 32px;
         width: 32px;
       }
-
       .brand {
         font-size: clamp(1.2rem, 4vw, 1.5rem);
       }
-
       .hero {
         padding: 60px 0;
         grid-template-columns: 1fr;
       }
-
       .hero h1 {
         font-size: clamp(2rem, 8vw, 3rem);
         line-height: 1.2;
       }
-
       .hero-visual {
         height: 60vh;
       }
-
       .bio-section {
         flex-direction: column;
         align-items: center;
         text-align: center;
         gap: 20px;
       }
-
       .bio-section img {
         margin: 0;
       }
@@ -457,19 +454,15 @@
         padding-left: 16px;
         padding-right: 16px;
       }
-
       .brand {
         font-size: 1.1rem;
       }
-
       .hero h1 {
         font-size: 1.8rem;
       }
-
       .hero-visual {
         height: 50vh;
       }
-
       .bio-section img {
         width: 120px;
         height: 180px;
@@ -503,7 +496,7 @@
     <!-- HERO -->
     <section class="hero anim">
       <div>
-        <div class="pill" data-i18n="hero.label">Paradigme</div>
+        <div class="pill" data-i18n="hero.label">What Now</div>
         <h1 data-i18n="hero.title">Everything happens at once.</h1>
         <p data-i18n="hero.subtitle">
           Cracking the brief in the multimodal space. A deep-dive workshop in
@@ -511,15 +504,16 @@
         </p>
       </div>
 
-      <!-- the canvas *is* the 3D word cloud, styled as hero-visual -->
+      <!-- the canvas is the 3D word cloud, styled as hero-visual -->
       <div class="hero-visual">
-        <div class="orbital"></div>
-        <canvas id="wordCloud"
-                style="width:100%;height:100%;display:block;"></canvas>
+        <canvas
+          id="wordCloud"
+          style="width:100%;height:100%;display:block;"
+        ></canvas>
       </div>
     </section>
 
-    <!-- SHIFT SECTION (kept short here – adjust text as you like) -->
+    <!-- SHIFT SECTION -->
     <section class="anim" id="shift">
       <div class="grid-two">
         <div>
@@ -551,7 +545,7 @@
       <p data-i18n="method.intro">
         A structured workflow that turns creative chaos into a precise pipeline.
       </p>
-      <!-- you can restore your method cards here -->
+      <!-- method cards can be added here -->
     </section>
 
     <!-- BIO SECTION -->
@@ -602,7 +596,7 @@
     const translations = {
       en: {
         brand: 'Crack the Brief | Multimodal Workshop',
-        'hero.label': 'Paradigme',
+        'hero.label': 'What Now',
         'hero.title': 'Everything happens at once.',
         'hero.subtitle':
           'Cracking the brief in the multimodal space. A deep-dive workshop in strategy, creative, and visual development in the age of Generative AI.',
@@ -628,7 +622,7 @@
       },
       he: {
         brand: 'לפצח את הבריף | סדנת מולטימודל',
-        'hero.label': 'פרדיגמה',
+        'hero.label': 'מה עכשיו',
         'hero.title': 'הכל קורה בבת אחת.',
         'hero.subtitle':
           'סדנה מעמיקה בפיצוח בריפים במרחב המולטימודלי – אסטרטגיה, קריאייטיב ופיתוח חזותי בעידן ה-AI הגנרטיבי.',
@@ -822,7 +816,7 @@
         ctx.save();
         ctx.globalAlpha = opacity;
         ctx.font = `${fontSize}px Heebo, sans-serif`;
-        ctx.fillStyle = '#5a3418'; // warm brown instead of white
+        ctx.fillStyle = '#5a3418'; // warm brown
         ctx.textAlign = 'center';
         ctx.textBaseline = 'middle';
         ctx.fillText(p.word, screenX, screenY);
@@ -831,7 +825,9 @@
     }
 
     document.addEventListener('DOMContentLoaded', () => {
-      // start in Hebrew
+      // start in Hebrew, RTL
+      document.documentElement.lang = 'he';
+      document.documentElement.dir = 'rtl';
       applyTranslations('he');
 
       // language toggle
@@ -841,7 +837,17 @@
             .querySelectorAll('.lang-toggle button')
             .forEach(b => b.classList.remove('active'));
           btn.classList.add('active');
-          applyTranslations(btn.dataset.lang);
+
+          const lang = btn.dataset.lang;
+          applyTranslations(lang);
+
+          if (lang === 'he') {
+            document.documentElement.lang = 'he';
+            document.documentElement.dir = 'rtl';
+          } else {
+            document.documentElement.lang = 'en';
+            document.documentElement.dir = 'ltr';
+          }
         });
       });
 
