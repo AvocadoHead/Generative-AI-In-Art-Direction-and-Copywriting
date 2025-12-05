@@ -22,9 +22,7 @@
       --font: 'Heebo', system-ui, -apple-system, sans-serif;
     }
 
-    * {
-      box-sizing: border-box;
-    }
+    * { box-sizing: border-box; }
 
     body {
       margin: 0;
@@ -190,9 +188,7 @@
       align-items: flex-start;
     }
 
-    h1,
-    h2,
-    h3 {
+    h1, h2, h3 {
       margin: 0 0 12px 0;
       letter-spacing: -0.01em;
       color: #301b0f;
@@ -211,8 +207,7 @@
       font-size: 1.35rem;
     }
 
-    p,
-    li {
+    p, li {
       color: var(--muted);
       line-height: 1.6;
       font-size: 1.02rem;
@@ -314,28 +309,16 @@
       box-shadow: 0 24px 50px rgba(255, 159, 85, 0.38);
     }
 
-    /* HERO VISUAL AS CONTAINER FOR CANVAS */
+    /* HERO VISUAL: back to the teal, 3D-ish cloud container you liked */
     .hero-visual {
       height: 420px;
       border-radius: 22px;
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
+      border: 1px solid rgba(255,255,255,0.1);
+      box-shadow: 0 20px 60px rgba(0,0,0,0.35);
       background:
-        radial-gradient(
-          circle at 30% 30%,
-          rgba(255, 214, 166, 0.5),
-          transparent 60%
-        ),
-        radial-gradient(
-          circle at 70% 60%,
-          rgba(255, 159, 171, 0.35),
-          transparent 60%
-        ),
-        linear-gradient(
-          135deg,
-          rgba(255, 214, 166, 0.4),
-          rgba(255, 255, 255, 0.4)
-        );
+        radial-gradient(circle at 30% 30%, rgba(158,252,255,0.28), transparent 60%),
+        radial-gradient(circle at 70% 60%, rgba(255,255,255,0.08), transparent 60%),
+        linear-gradient(135deg, rgba(158,252,255,0.12), rgba(255,255,255,0.02));
       position: relative;
       overflow: hidden;
       width: 100%;
@@ -349,14 +332,10 @@
       width: 180px;
       height: 180px;
       border-radius: 50%;
-      background: radial-gradient(
-        circle,
-        rgba(255, 214, 166, 0.75),
-        transparent 60%
-      );
+      background: radial-gradient(circle, rgba(158,252,255,0.45), transparent 60%);
       filter: blur(14px);
       animation: float 9s ease-in-out infinite;
-      pointer-events: none;
+      pointer-events: none; /* important so the word cloud is interactive */
     }
 
     .hero-visual::before {
@@ -371,10 +350,11 @@
       animation-delay: -0.7s;
     }
 
+    /* NOTE: .orbital removed from the DOM so the old rectangle is gone */
+
     @keyframes float {
-      0%,
-      100% { transform: translateY(0); }
-      50% { transform: translateY(-12px); }
+      0%, 100% { transform: translateY(0); }
+      50%      { transform: translateY(-12px); }
     }
 
     .anim {
@@ -388,10 +368,51 @@
       transform: translateY(0);
     }
 
-    /* RTL alignment when document is RTL */
-    html[dir="rtl"] body {
-      direction: rtl;
+    .method-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 18px;
+      margin-top: 24px;
     }
+
+    .method-card {
+      padding: 20px;
+      background: rgba(255, 245, 227, 0.9);
+      border-radius: 14px;
+      border: 1px solid rgba(255, 181, 107, 0.3);
+      min-height: 220px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .method-card span.step {
+      display: inline-block;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: rgba(255, 181, 107, 0.22);
+      color: #8a4f1f;
+      font-weight: 700;
+      font-size: 0.9rem;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+    }
+
+    .list-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 18px;
+      margin-top: 18px;
+    }
+
+    .list-card {
+      padding: 18px;
+      border-radius: 14px;
+      background: rgba(255, 255, 255, 0.92);
+      border: 1px solid rgba(255, 181, 107, 0.25);
+    }
+
+    /* RTL / LTR alignment */
+    html[dir="rtl"] body { direction: rtl; }
 
     html[dir="rtl"] p,
     html[dir="rtl"] h1,
@@ -409,40 +430,46 @@
       text-align: left;
     }
 
-    /* MOBILE styles */
+    /* Mobile */
     @media (max-width: 768px) {
-      header {
-        padding: 10px 14px;
-      }
+      header { padding: 10px 14px; }
+
       .wrapper {
         padding-top: 80px;
         padding-left: 20px;
         padding-right: 20px;
       }
+
       .brand-logo {
         height: 32px;
         width: 32px;
       }
+
       .brand {
         font-size: clamp(1.2rem, 4vw, 1.5rem);
       }
+
       .hero {
         padding: 60px 0;
         grid-template-columns: 1fr;
       }
+
       .hero h1 {
         font-size: clamp(2rem, 8vw, 3rem);
         line-height: 1.2;
       }
+
       .hero-visual {
         height: 60vh;
       }
+
       .bio-section {
         flex-direction: column;
         align-items: center;
         text-align: center;
         gap: 20px;
       }
+
       .bio-section img {
         margin: 0;
       }
@@ -454,15 +481,17 @@
         padding-left: 16px;
         padding-right: 16px;
       }
-      .brand {
-        font-size: 1.1rem;
-      }
+
+      .brand { font-size: 1.1rem; }
+
       .hero h1 {
         font-size: 1.8rem;
       }
+
       .hero-visual {
         height: 50vh;
       }
+
       .bio-section img {
         width: 120px;
         height: 180px;
@@ -496,6 +525,7 @@
     <!-- HERO -->
     <section class="hero anim">
       <div>
+        <!-- pill text changed as requested -->
         <div class="pill" data-i18n="hero.label">What Now</div>
         <h1 data-i18n="hero.title">Everything happens at once.</h1>
         <p data-i18n="hero.subtitle">
@@ -504,16 +534,11 @@
         </p>
       </div>
 
-      <!-- the canvas is the 3D word cloud, styled as hero-visual -->
-      <div class="hero-visual">
-        <canvas
-          id="wordCloud"
-          style="width:100%;height:100%;display:block;"
-        ></canvas>
-      </div>
+      <!-- 3D word cloud canvas -->
+      <canvas id="wordCloud" class="hero-visual"></canvas>
     </section>
 
-    <!-- SHIFT SECTION -->
+    <!-- SHIFT SECTION (original idea preserved) -->
     <section class="anim" id="shift">
       <div class="grid-two">
         <div>
@@ -526,17 +551,21 @@
           <p data-i18n="shift.body1">
             Most of the industry still works in a “divide and fragment” mindset.
             Copy in one tab, images in another, and the original brief gets lost
-            somewhere in the middle. The result: friction.
+            somewhere in the middle. The result: friction. Too many technical
+            handoffs, not enough continuous creation.
           </p>
           <p data-i18n="shift.body2">
-            This workshop moves you into a unified workflow. A single generative
-            canvas, where written strategy and visual output evolve side by side.
+            This workshop moves you into a unified workflow. Forget ping-ponging
+            between tools. We work on a single generative canvas, where written
+            strategy and visual output evolve side by side. It does not matter if
+            you use Krea, ComfyUI, or Runway – the real shift is in your thinking,
+            not in the tool.
           </p>
         </div>
       </div>
     </section>
 
-    <!-- METHODOLOGY SECTION -->
+    <!-- METHODOLOGY SECTION – 4 movements/cards -->
     <section class="anim" id="methodology">
       <div class="pill" data-i18n="method.label">Recipe</div>
       <h2 data-i18n="method.title">
@@ -545,7 +574,90 @@
       <p data-i18n="method.intro">
         A structured workflow that turns creative chaos into a precise pipeline.
       </p>
-      <!-- method cards can be added here -->
+
+      <div class="method-grid">
+        <div class="method-card">
+          <span class="step" data-i18n="method.step1.label">Movement I</span>
+          <h3 data-i18n="method.step1.title">
+            Decode the brief into story-DNA
+          </h3>
+          <p data-i18n="method.step1.body">
+            We begin by unpacking the brief into tone, tensions, emotional arc,
+            and core images – before any prompt is written. The goal is to agree
+            on what the piece really wants to say.
+          </p>
+        </div>
+
+        <div class="method-card">
+          <span class="step" data-i18n="method.step2.label">Movement II</span>
+          <h3 data-i18n="method.step2.title">
+            Build the multimodal sketchbook
+          </h3>
+          <p data-i18n="method.step2.body">
+            From that story-DNA we generate visual and textual sketches:
+            multiple prompt directions, camera and composition ideas, rhythm and
+            typography. Everything lives on one canvas instead of scattered files.
+          </p>
+        </div>
+
+        <div class="method-card">
+          <span class="step" data-i18n="method.step3.label">Movement III</span>
+          <h3 data-i18n="method.step3.title">
+            Refine into look &amp; feel
+          </h3>
+          <p data-i18n="method.step3.body">
+            We sift through the experiments, keep what sings, and shape a clear
+            look &amp; feel: color, texture, motion language. The result is a
+            visual direction everyone can recognize and work with.
+          </p>
+        </div>
+
+        <div class="method-card">
+          <span class="step" data-i18n="method.step4.label">Movement IV</span>
+          <h3 data-i18n="method.step4.title">
+            Compose the final piece
+          </h3>
+          <p data-i18n="method.step4.body">
+            Finally we assemble the assets into a coherent flow: sequence of
+            scenes, timing, typographic moments, sound and export strategy –
+            from first frame to last.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- VALUE / OUTCOMES SECTION -->
+    <section class="anim" id="value">
+      <div class="pill" data-i18n="value.label">Outcome</div>
+      <h2 data-i18n="value.title">What you leave with</h2>
+      <p data-i18n="value.intro">
+        The workshop is designed so you don’t just understand the method in theory –
+        you walk out with something concrete.
+      </p>
+
+      <div class="list-cards">
+        <div class="list-card">
+          <h3 data-i18n="value.card1.title">A practical multimodal workflow</h3>
+          <p data-i18n="value.card1.body">
+            A repeatable process you can reuse with different tools and briefs,
+            without starting from zero every time a new platform appears.
+          </p>
+        </div>
+        <div class="list-card">
+          <h3 data-i18n="value.card2.title">A live project in progress</h3>
+          <p data-i18n="value.card2.body">
+            A real piece – concept, board, or near-final video – built on top of
+            your own material or an industry-style brief.
+          </p>
+        </div>
+        <div class="list-card">
+          <h3 data-i18n="value.card3.title">A shared language for the team</h3>
+          <p data-i18n="value.card3.body">
+            A vocabulary that connects strategy, copy, design and motion, so the
+            process becomes more fluid and less fragmented.
+          </p>
+        </div>
+      </div>
     </section>
 
     <!-- BIO SECTION -->
@@ -562,6 +674,8 @@
             <h2 data-i18n="bio.title">Eyal Izenman</h2>
             <p data-i18n="bio.body">
               Creator, animator, motion designer, and thought leader in the Generative AI space.
+              With decades of weaving music, design and movement, איל איזנמן works where human
+              intuition meets algorithmic improvisation.
             </p>
             <div class="quote" data-i18n="bio.quote">
               “AI is not a tech trick – it is a full creative space. My goal is
@@ -600,22 +714,56 @@
         'hero.title': 'Everything happens at once.',
         'hero.subtitle':
           'Cracking the brief in the multimodal space. A deep-dive workshop in strategy, creative, and visual development in the age of Generative AI.',
+
         'shift.label': 'Paradigme',
         'shift.title': 'The shift: from “copy here, visual there” to one unified canvas.',
         'shift.body1':
-          'Most of the industry still works in a “divide and fragment” mindset. Copy in one tab, images in another, and the original brief gets lost somewhere in the middle.',
+          'Most of the industry still works in a “divide and fragment” mindset. Copy in one tab, images in another, and the original brief gets lost somewhere in the middle. The result: friction. Too many technical handoffs, not enough continuous creation.',
         'shift.body2':
-          'This workshop moves you into a unified workflow. A single generative canvas, where written strategy and visual output evolve side by side.',
+          'This workshop moves you into a unified workflow. Forget ping-ponging between tools. We work on a single generative canvas, where written strategy and visual output evolve side by side.',
+
         'method.label': 'Recipe',
         'method.title': 'The methodology: from brief to video in 4 movements.',
         'method.intro':
           'A structured workflow that turns creative chaos into a precise pipeline.',
+        'method.step1.label': 'Movement I',
+        'method.step1.title': 'Decode the brief into story-DNA',
+        'method.step1.body':
+          'We begin by unpacking the brief into tone, tensions, emotional arc, and core images – before any prompt is written. The goal is to agree on what the piece really wants to say.',
+        'method.step2.label': 'Movement II',
+        'method.step2.title': 'Build the multimodal sketchbook',
+        'method.step2.body':
+          'From that story-DNA we generate visual and textual sketches: multiple prompt directions, camera and composition ideas, rhythm and typography. Everything lives on one canvas instead of scattered files.',
+        'method.step3.label': 'Movement III',
+        'method.step3.title': 'Refine into look & feel',
+        'method.step3.body':
+          'We sift through the experiments, keep what sings, and shape a clear look & feel: color, texture, motion language. The result is a visual direction everyone can recognize and work with.',
+        'method.step4.label': 'Movement IV',
+        'method.step4.title': 'Compose the final piece',
+        'method.step4.body':
+          'Finally we assemble the assets into a coherent flow: sequence of scenes, timing, typographic moments, sound and export strategy – from first frame to last.',
+
+        'value.label': 'Outcome',
+        'value.title': 'What you leave with',
+        'value.intro':
+          'The workshop is designed so you don’t just understand the method in theory – you walk out with something concrete.',
+        'value.card1.title': 'A practical multimodal workflow',
+        'value.card1.body':
+          'A repeatable process you can reuse with different tools and briefs, without starting from zero every time a new platform appears.',
+        'value.card2.title': 'A live project in progress',
+        'value.card2.body':
+          'A real piece – concept, board, or near-final video – built on top of your own material or an industry-style brief.',
+        'value.card3.title': 'A shared language for the team',
+        'value.card3.body':
+          'A vocabulary that connects strategy, copy, design and motion, so the process becomes more fluid and less fragmented.',
+
         'bio.label': 'About me',
         'bio.title': 'Eyal Izenman',
         'bio.body':
-          'Creator, animator, motion designer, and thought leader in the Generative AI space.',
+          'Creator, animator, motion designer, and thought leader in the Generative AI space. With decades of weaving music, design and movement, Eyal Izenman works where human intuition meets algorithmic improvisation.',
         'bio.quote':
           '“AI is not a tech trick – it is a full creative space. My goal is to help you surface the idea, refine it, and turn it into a complete visual asset – in one continuous breath.”',
+
         'cta.line':
           'The full pipeline: Brief ← Story DNA ← Language & style ← Mutation ← Refinement ← Moodboard ← Look & Feel ← Storyboard ← Video.',
         'cta.button': 'Talk to me about the workshop'
@@ -626,22 +774,56 @@
         'hero.title': 'הכל קורה בבת אחת.',
         'hero.subtitle':
           'סדנה מעמיקה בפיצוח בריפים במרחב המולטימודלי – אסטרטגיה, קריאייטיב ופיתוח חזותי בעידן ה-AI הגנרטיבי.',
+
         'shift.label': 'פרדיגמה',
         'shift.title': 'המעבר: מטקסט פה וויז׳ואל שם – לקנבס אחד מאוחד.',
         'shift.body1':
-          'רוב התעשייה עדיין עובדת בפיצול: טקסט בחלון אחד, תמונות באחר, והבריף המקורי הולך לאיבוד באמצע.',
+          'רוב התעשייה עדיין עובדת בפיצול: טקסט בחלון אחד, תמונות באחר, והבריף המקורי הולך לאיבוד באמצע. התוצאה: חיכוך אינסופי, יותר מדי העברות, מעט מדי יצירה רציפה.',
         'shift.body2':
-          'בסדנה אנחנו עוברים לקנבס גנרטיבי אחד, שבו שפה, רעיון ותמונה מתפתחים יחד.',
+          'בסדנה אנחנו עוברים לקנבס גנרטיבי אחד, שבו שפה, רעיון ותמונה מתפתחים יחד – במקום להתרוצץ בין כלים וחלונות שונים.',
+
         'method.label': 'מתכון',
         'method.title': 'המתודולוגיה: מבריף לווידאו בארבעה מהלכים.',
         'method.intro':
           'תהליך מובנה שמארגן את הכאוס היצירתי לצינור עבודה ברור.',
+        'method.step1.label': 'מהלך I',
+        'method.step1.title': 'פירוק הבריף ל-DNA של סיפור',
+        'method.step1.body':
+          'מתחילים בתרגום הבריף לעמוד שדרה סיפורי: טון, מתחים, קשת רגשית ותמונות מרכזיות – עוד לפני שנכתבת מילה אחת של פרומפט.',
+        'method.step2.label': 'מהלך II',
+        'method.step2.title': 'מחברת הסקיצות המולטימודלית',
+        'method.step2.body':
+          'מה-DNA הסיפורי אנחנו מייצרים סקיצות – וריאציות של פרומפטים, בחירות מצלמה וקומפוזיציה, קצב וטיפוגרפיה – כולן חיות על אותו קנבס.',
+        'method.step3.label': 'מהלך III',
+        'method.step3.title': 'ממוּדבורד ללוק & פיל',
+        'method.step3.body':
+          'מצמצמים את הרעש לאסתטיקה ממוקדת: צבע, טקסטורות, חתימת תנועה. המטרה: לוק & פיל שכולם יכולים לזהות כ״זה שלנו״.',
+        'method.step4.label': 'מהלך IV',
+        'method.step4.title': 'הלחנת היצירה הסופית',
+        'method.step4.body':
+          'מסדרים הכול בזמן: סדר סצנות, קצב, רגעים טיפוגרפיים, סאונד ואסטרטגיית אקספורט – מפריים ראשון ועד אחרון.',
+
+        'value.label': 'תוצאה',
+        'value.title': 'עם מה אתם יוצאים מהסדנה',
+        'value.intro':
+          'המטרה היא שלא תצאו רק עם השראה – אלא עם מתודה ועם התחלה של יצירה משלכם.',
+        'value.card1.title': 'מתודה מולטימודלית מעשית',
+        'value.card1.body':
+          'תהליך עבודה שניתן לשחזר על בריפים שונים וכלים משתנים, בלי להתחיל מאפס בכל פעם שיוצא פלטפורמה חדשה.',
+        'value.card2.title': 'פרויקט חי בתהליך',
+        'value.card2.body':
+          'קונספט, סקיצה או וידאו כמעט סופי – שנבנים על בסיס חומר שלכם או בריף משותף שעובדים עליו בסדנה.',
+        'value.card3.title': 'שפה משותפת לצוות',
+        'value.card3.body':
+          'שפה שמחברת בין אסטרטגיה, קופי, עיצוב ותנועה – כך שהתהליך הופך זורם יותר ופחות מפוצל.',
+
         'bio.label': 'עליי',
         'bio.title': 'איל איזנמן',
         'bio.body':
-          'יוצר, מנפיש ומעצב תנועה, פעיל מוביל בישראל בתחום ה-AI היצירתי.',
+          'יוצר, מנפיש ומעצב תנועה, מהקולות הבולטים בישראל בשדה ה-AI היצירתי. שוזר יחד מוזיקה, עיצוב ותנועה למרחבים גנרטיביים.',
         'bio.quote':
           '״AI הוא לא טריק טכנולוגי – הוא מרחב יצירתי שלם. המטרה שלי היא לעזור לך לזקק את הרעיון ולהפוך אותו לנכס חזותי שלם, בנשימה אחת רציפה.״',
+
         'cta.line':
           'הצינור המלא: בריף ← DNA של סיפור ← שפה וסגנון ← מוטציות ← ליטוש ← מוּדבורד ← לוק & פיל ← סטוריבורד ← וידאו.',
         'cta.button': 'דברו איתי על הסדנה'
@@ -816,7 +998,7 @@
         ctx.save();
         ctx.globalAlpha = opacity;
         ctx.font = `${fontSize}px Heebo, sans-serif`;
-        ctx.fillStyle = '#5a3418'; // warm brown
+        ctx.fillStyle = '#5a3418'; // warm brown text
         ctx.textAlign = 'center';
         ctx.textBaseline = 'middle';
         ctx.fillText(p.word, screenX, screenY);
