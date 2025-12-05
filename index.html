@@ -313,7 +313,7 @@
       gap: 24px;
       align-items: flex-start;
     }
-@@ -311,86 +342,86 @@
+@@ -311,56 +342,56 @@
       .hero-visual {
         height: 50vh;
       }
@@ -341,14 +341,16 @@
       <div>
         <div class="pill" data-i18n="hero.label">Paradigme</div>
         <h1 data-i18n="hero.title">Everything happens at once.</h1>
-        <div class="pill" data-i18n="hero.label">Multimodal workshop</div>
-        <h1 data-i18n="hero.title">A warm scrollytelling lab for strategy and visuals.</h1>
         <p data-i18n="hero.subtitle">
           Cracking the brief in the multimodal space. A deep-dive workshop in strategy, creative,
           and visual development in the age of Generative AI.
-          Crack the brief, build the look, and narrate the full journey on one flowing canvas.
-          A hands-on workshop that blends storytelling, prompts, and moving imagery.
         </p>
+      <div class="pill" data-i18n="hero.label">Paradigme</div>
+      <h1 data-i18n="hero.title">Everything happens at once.</h1>
+      <p data-i18n="hero.subtitle">
+        Cracking the brief in the multimodal space. A deep-dive workshop in strategy, creative,
+        and visual development in the age of Generative AI.
+      </p>
       </div>
       <!-- 3D word cloud canvas -->
       <canvas id="wordCloud" class="hero-visual"></canvas>
@@ -358,7 +360,6 @@
       <div class="grid-two">
         <div>
           <div class="pill" data-i18n="shift.label">Paradigme</div>
-          <div class="pill" data-i18n="shift.label">Why this workshop</div>
           <h2 data-i18n="shift.title">
             The shift: from “copy here, visual there” to one unified canvas.
           </h2>
@@ -375,38 +376,7 @@
             Krea, ComfyUI, or Runway – the real shift is in your thinking, not in the tool.
           </p>
         </div>
-      </div>
-    </section>
-
-    <section class="anim" id="methodology">
-      <div class="pill" data-i18n="method.label">Recipe</div>
-      <div class="pill" data-i18n="method.label">Workshop flow</div>
-      <h2 data-i18n="method.title">The methodology: from brief to video in 4 movements.</h2>
-      <p data-i18n="method.intro">A structured workflow that turns creative chaos into a precise pipeline.</p>
-      <div class="method-grid">
-        <div class="method-card">
-          <span class="step" data-i18n="method.steps.0.title">Deconstruction // Understanding the DNA</span>
-          <p data-i18n="method.steps.0.body">
-            The brief does not go into the machine as-is. First, it is taken apart into its core components.
-          </p>
-          <p data-i18n="method.steps.0.learn">
-            Learn: How to surface hidden intentions and brand values using LLMs, and how to spot the gap between
-            “what the client asked for” and “what the brand actually needs”.
-          </p>
-        </div>
-        <div class="method-card">
-          <span class="step" data-i18n="method.steps.1.title">Decoding // Building the language</span>
-          <p data-i18n="method.steps.1.body">
-            Turning insights into a creative operating system. This is where words become visuals.
-          </p>
-          <p data-i18n="method.steps.1.learn">
-            Learn: Building an AI-driven style-sheet, translating narrative into composition, and crafting prompts
-            that do more than describe an image – they tell a story.
-          </p>
-        </div>
-        <div class="method-card">
-          <span class="step" data-i18n="method.steps.2.title">Mutation // The big bang</span>
-@@ -463,181 +494,181 @@
+@@ -463,51 +494,51 @@
             src="Assets/Self PR Image 051125 .png"
             alt="Eyal Izenman"
             style="width: 140px; height: 210px; border-radius: 12px; object-fit: cover; flex-shrink: 0;"
@@ -453,150 +423,52 @@
         'brand': 'Multimodal Workshop',
         'hero.label': 'Paradigme',
         'hero.title': 'Everything happens at once.',
-        'hero.label': 'Multimodal workshop',
-        'hero.title': 'A warm scrollytelling lab for strategy and visuals.',
         'hero.subtitle':
           'Cracking the brief in the multimodal space. A deep-dive workshop in strategy, creative, and visual development in the age of Generative AI.',
         'shift.label': 'Paradigme',
-          'Crack the brief, build the look, and narrate the full journey on one flowing canvas. A hands-on workshop that blends storytelling, prompts, and moving imagery.',
-        'shift.label': 'Why this workshop',
         'shift.title': 'The shift: from “copy here, visual there” to one unified canvas.',
         'shift.body1':
           'Most of the industry still works in a “divide and fragment” mindset. Copy in one tab, images in another, and the original brief gets lost somewhere in the middle. The result: friction. Too many technical handoffs, not enough continuous creation.',
-        'shift.body2':
-          'This workshop moves you into a unified workflow. Forget ping-ponging between tools. We work on a single generative canvas, where written strategy and visual output evolve side by side. It does not matter if you use Krea, ComfyUI, or Runway – the real shift is in your thinking, not in the tool.',
-        'method.label': 'Recipe',
-        'method.label': 'Workshop flow',
-        'method.title': 'The methodology: from brief to video in 4 movements.',
-        'method.intro': 'A structured workflow that turns creative chaos into a precise pipeline.',
-        'method.steps.0.title': 'Deconstruction // Understanding the DNA',
-        'method.steps.0.body':
-          'The brief does not go into the machine as-is. First, it is taken apart into its core components.',
-        'method.steps.0.learn':
-          'Learn: How to surface hidden intentions and brand values using LLMs, and how to spot the gap between “what the client asked for” and “what the brand actually needs”.',
-        'method.steps.1.title': 'Decoding // Building the language',
-        'method.steps.1.body':
-          'Turning insights into a creative operating system. This is where words become visuals.',
-        'method.steps.1.learn':
-          'Learn: Building an AI-driven style-sheet, translating narrative into composition, and crafting prompts that do more than describe an image – they tell a story.',
-        'method.steps.2.title': 'Mutation // The big bang',
-        'method.steps.2.body':
-          'No random spraying of ideas – instead, an evolution of concepts.',
-        'method.steps.2.learn':
-          'Learn: Text → Image → Text cycles, smart variations, and using mood exploration to reach results that are surprising yet precise.',
-        'method.steps.3.title': 'Refinement // The final reduction',
-        'method.steps.3.body':
-          'The distillation phase. Sketches become assets, ideas become production-ready.',
-        'method.steps.3.learn':
-          'Learn: Building visual consistency across series, iterative refinement, and preparing for full production: from storyboard to video shots.',
-        'audience.title': 'Who is this for?',
-        'audience.points.0':
-          'Professionals who know AI is not a “magic button”, but their new creative partner.',
-        'audience.points.1':
-          'Account managers who want to lead the process, not just pass messages along.',
-        'audience.points.2':
-          'Planners and strategists who want visual expression for their insights.',
-        'audience.points.3':
-          'Art directors and designers who want to control the tool, instead of being controlled by it.',
-        'audience.points.4':
-          'AI creators and producers ready to level up from random outputs to a stable, well-reasoned pipeline.',
-        'value.title': 'What you leave with',
-        'value.body1': 'A complete creative pipeline – from strategy to video.',
-        'value.body2': 'Full control over the brief, the language, and the final output.',
-        'value.body3': 'A tool-agnostic methodology that will not break the moment platforms change.',
-        'value.body4': 'The ability to lead – to show clients a deep process, not just a pretty result.',
-        'bio.label': 'About me',
-        'bio.title': 'About me – Eyal Izenman',
-        'bio.body':
-          'Creator, animator, motion designer, and thought leader in the Generative AI space. With decades of experience weaving together music, design, and movement, Eyal Izenman is one of the leading voices in Israel at the intersection of human creativity and artificial intelligence.',
-        'bio.quote':
-          '“AI is not a tech trick – it is a full creative space. My goal is to help you surface the idea, refine it, and turn it into a complete visual asset – in one continuous breath.”',
-        'cta.line':
-          'The full pipeline: Brief ← Deconstruction ← Decoding ← Mutation ← Refinement ← Moodboard ← Look & Feel ← Storyboard ← Video.',
-          'The full pipeline: Brief ← Story DNA ← Language & style ← Mutation ← Refinement ← Moodboard ← Look & Feel ← Storyboard ← Video.',
-        'cta.button': 'Contact'
-      },
-      he: {
-        'brand': 'לפצח את הבריף | סדנה לאסטרטגיות מולטימודליות',
-        'hero.label': 'פרדיגמה',
-        'hero.title': 'הכול קורה בבת־אחת.',
-        'hero.label': 'סדנה מולטימודלית',
-        'hero.title': 'מסע Scroll-Telling חמים לאסטרטגיה ולוויז׳ואל.',
-        'hero.subtitle':
-          'לפצח את הבריף במרחב המולטי־מודאלי. סדנת עומק לאסטרטגיה, קריאייטיב ופיתוח ויזואלי בעידן ה-Generative AI.',
-        'shift.label': 'פרדיגמה',
-          'מפצחים את הבריף, בונים שפה ויזואלית, ומספרים את הסיפור על קנבס אחד זורם. סדנה מעשית שמחברת בין נרטיב, פרומפטים ותנועה.',
-        'shift.label': 'למה הסדנה הזו',
-        'shift.title': 'השינוי: מ"קופי כאן, ויז׳ואל שם" לקנבס אחד מאוחד.',
-        'shift.body1':
-          'רוב התעשייה עדיין עובדת בשיטת "הפרד ומשול". טקסט בטאב אחד, תמונה בטאב שני, והבריף המקורי הולך לאיבוד איפשהו באמצע. התוצאה? חיכוך. הרבה מעברים טכניים, ומעט מדי יצירה רציפה.',
-        'shift.body2':
-          'אנחנו עוברים למודל עבודה אחוד. תשכחו מפינג-פונג בין כלים. הסדנה מציגה עבודה על קנבס גנרטיבי אחד: מרחב שבו המילה הכתובה, האסטרטגיה והפלט הגרפי מתהווים במקביל. זה לא משנה אם אתם עובדים ב-Krea, ComfyUI או Runway – השינוי הוא בראש, לא בכלי.',
-        'method.label': 'מתכון',
-        'method.label': 'זרימת הסדנה',
-        'method.title': 'המתודולוגיה: מהבריף ועד וידאו ב-4 תנועות.',
-        'method.intro': 'זרימה סדורה שהופכת כאוס יצירתי לפייפליין מדויק.',
-        'method.steps.0.title': 'פירוק (Deconstruction) // להבין את ה-DNA',
-        'method.steps.0.body':
-          'הבריף לא נכנס למכונה כמו שהוא. אנחנו מפרקים אותו לגורמים ראשוניים.',
-        'method.steps.0.learn':
-          'מה נלמד: חילוץ כוונות נסתרות וערכי מותג בעזרת LLM, וזיהוי הפער הקריטי בין "מה הלקוח ביקש" לבין "מה המותג צריך".',
-        'method.steps.1.title': 'פענוח (Decoding) // לבנות את השפה',
-        'method.steps.1.body':
-          'הפיכת התובנות למערכת הפעלה יצירתית. זה השלב שבו מילים הופכות לוויז׳ואל.',
-        'method.steps.1.learn':
-          'מה נלמד: בניית "Style-Sheet" מבוסס AI, תרגום נרטיב לקומפוזיציה, ויצירת פרומפטים שלא רק מתארים תמונה, אלא מספרים סיפור.',
-        'method.steps.2.title': 'הנפצה (Mutation) // המפץ הגדול',
-        'method.steps.2.body': 'לא יורים לכל הכיוונים – מייצרים אבולוציה של רעיונות.',
-        'method.steps.2.learn':
-          'מה נלמד: סייקלים של Text → Image → Text, יצירת וריאציות חכמות, ושימוש ב-Mood Exploration כדי להגיע לתוצאות בלתי צפויות אך מדויקות.',
-        'method.steps.3.title': 'התססה (Refinement) // הזיקוק הסופי',
-        'method.steps.3.body': 'שלב העיבוי. כאן הופכים סקיצות לנכסים, ורעיונות להפקה.',
-        'method.steps.3.learn':
-          'מה נלמד: יצירת עקביות (Consistency) בתוך סדרות ויזואליות, Iterative Refinement, והכנת הקרקע להפקה מלאה: מסטוריבורד ועד שוטים לווידאו.',
-        'audience.title': 'למי הסדנה מיועדת?',
-        'audience.points.0': 'מקצוענים שיודעים ש-AI הוא לא "כפתור קסם" אלא שותף יצירתי חדש.',
-        'audience.points.1': 'מנהלי לקוחות שרוצים להוביל את התהליך, לא רק להעביר מסרים.',
-        'audience.points.2': 'פלנרים ואסטרטגים שמחפשים ביטוי ויזואלי לתובנות שלהם.',
-        'audience.points.3': 'ארט דירקטורים ומעצבים שרוצים לשלוט בכלי – ולא להיות נשלטים על ידו.',
-        'audience.points.4': 'יוצרי AI ומפיקים שמוכנים לעבור מפלטים אקראיים לפייפליין יציב ומנומק.',
-        'value.title': 'בסיום הסדנה, יהיה לכם ביד:',
-        'value.body1': 'פייפליין יצירתי מלא – מאסטרטגיה ועד וידאו.',
-        'value.body2': 'שליטה מוחלטת בבריף, בשפה ובתוצר הסופי.',
-        'value.body3':
-          'מתודולוגיה אגנוסטית – כזו שלא תלויה בפלטפורמה אחת שתתחלף מחר בבוקר.',
-        'value.body4':
-          'יכולת הובלה – להציג ללקוח תהליך עומק, ולא רק תוצאה יפה.',
-        'bio.label': 'עליי',
-        'bio.title': 'איל איזנמן',
-        'bio.body':
-          'יוצר, אנימטור, מעצב תנועה ומוביל דעה בתחום ה-Generative AI. עם עשרות שנים של ניסיון בחיבור בין מוזיקה, עיצוב ותנועה, איל איזנמן הוא מהקולות הבולטים בישראל בסינתזה שבין יצירה אנושית לבינה מלאכותית.',
-        'bio.quote':
-          '"אני לא רואה ב-AI טריק טכנולוגי, אלא מרחב יצירתי שלם. המטרה שלי היא ללמד אתכם איך לחשוף את הרעיון, לדייק אותו, ולהפוך אותו לנכס ויזואלי שלם – בנשימה אחת."',
-        'cta.line':
-          'הפייפליין המלא: בריף ← פירוק ← פענוח ← הנפצה ← התססה ← Moodboard ← Look & Feel ← סטוריבורד ← וידאו.',
-          'הפייפליין המלא: בריף ← DNA של הסיפור ← שפה וסגנון ← הנפצה ← התססה ← Moodboard ← Look & Feel ← סטוריבורד ← וידאו.',
-        'cta.button': 'צור קשר'
+@@ -792,41 +823,41 @@
+
+      if (!isDragging) {
+        rotationY += momentumY;
+        rotationX += momentumX;
+        momentumX *= 0.95;
+        momentumY *= 0.95;
+        rotationY += 0.001;
+        rotationX += 0.0005;
       }
-    };
 
-    function applyTranslations(lang = 'he') {
-      const map = translations[lang];
-      if (!map) return;
+      const sorted = particles.map(p => {
+        const rotated = rotatePoint(p.x, p.y, p.z);
+        return { ...p, ...rotated };
+      }).sort((a, b) => a.z - b.z);
 
-      document.documentElement.lang = lang;
-      document.body.dir = lang === 'he' ? 'rtl' : 'ltr';
+      sorted.forEach(p => {
+        const scale = 600 / (600 + p.z);
+        const screenX = width / 2 + p.x * scale;
+        const screenY = height / 2 + p.y * scale;
+        const fontSize = 14 + scale * 8;
+        const opacity = 0.3 + scale * 0.7;
 
-      document.querySelectorAll('[data-i18n]').forEach(el => {
-        const key = el.getAttribute('data-i18n');
-        if (map[key]) el.textContent = map[key];
-      });
-
-      document.querySelectorAll('.lang-toggle button').forEach(btn => {
-        btn.classList.toggle('active', btn.dataset.lang === lang);
+        ctx.save();
+        ctx.globalAlpha = opacity;
+        ctx.font = `${fontSize}px Heebo, sans-serif`;
+        ctx.fillStyle = '#ffffff';
+        ctx.fillStyle = '#5a3418';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText(p.word, screenX, screenY);
+        ctx.restore();
       });
     }
 
-    document.querySelectorAll('.lang-toggle button').forEach(btn => {
-      btn.addEventListener('click', () => applyTranslations(btn.dataset.lang));
-    });
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initWordCloud);
+    } else {
+      initWordCloud();
+    }
+  </script>
+</body>
+</html>
