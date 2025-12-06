@@ -1,3 +1,5 @@
+/* ========= TRANSLATIONS ========= */
+
 const translations = {
   en: {
     brand: 'Crack the Brief | Multimodal Workshop',
@@ -130,6 +132,7 @@ function applyTranslations(lang) {
 }
 
 /* ========= WORD CLOUD ========= */
+
 let canvas, ctx;
 const words = [
   'ferment', 'distill', 'dream', 'style', 'composition', 'palette',
@@ -231,7 +234,7 @@ function initWordCloud() {
 }
 
 function resizeCanvas() {
-  if (!canvas) return;
+  if (!canvas || !ctx) return;
   const dpr = window.devicePixelRatio || 1;
   const rect = canvas.getBoundingClientRect();
   canvas.width = rect.width * dpr;
@@ -297,68 +300,167 @@ function animateWordCloud() {
   });
 }
 
-/* ========= SCROLL RIVER ========= */
-let riverMain, riverLength, riverBranches;
-let scrollAnimating = false;
+/* ========= SCROLL TRACE (random pastel path) ========= */
 
-function initScrollRiver() {
-  riverMain = document.getElementById('riverMain');
-  if (!riverMain) return;
+let traceCanvas, traceCtx;
+let tracePoints = [];
+let traceNormalizedPoints = [];
+let scrollTraceAnimating = false;
 
-  riverBranches = Array.from(document.querySelectorAll('.river-branch'));
+// Generate a random but smooth-ish polyline in normalized coordinates
+function generateRandomNormalizedPath() {
+  const segments = 7 + Math.floor(Math.random() * 4); // 7–10 points
+  const points = [];
 
-  // compute full length and set dash array so we can "draw" it
-  riverLength = riverMain.getTotalLength();
-  riverMain.style.strokeDasharray = riverLength;
-  riverMain.style.strokeDashoffset = riverLength;
+  for (let i = 0; i < segments; i++) {
+    const t = i / (segments - 1); // 0 → 1
+
+    // vertical progression, with slight jitter
+    let y = t + (Math.random() - 0.5) * 0.08;
+    y = Math.min(1, Math.max(0, y));
+
+    // alternate left/right bias for a snaky feel
+    const bias = i % 2 === 0 ? 0.75 : 0.25;
+    let x = bias + (Math.random() - 0.5) * 0.25;
+    x = Math.min(0.95, Math.max(0.05, x));
+
+    points.push({ x, y });
+  }
+
+  return points;
 }
 
-function updateScrollRiver() {
-  if (!riverMain) return;
+function initScrollTrace() {
+  traceCanvas = document.getElementById('scrollTrace');
+  if (!traceCanvas) return;
+
+  traceCtx = traceCanvas.getContext('2d');
+
+  if (!traceNormalizedPoints.length) {
+    traceNormalizedPoints = generateRandomNormalizedPath();
+  }
+
+  setupTraceSize();
+  window.addEventListener('resize', setupTraceSize);
+  window.addEventListener('scroll', onScrollTrace, { passive: true });
+
+  drawScrollTrace(); // initial
+}
+
+function setupTraceSize() {
+  if (!traceCanvas || !traceCtx) return;
+
+  const dpr = window.devicePixelRatio || 1;
+  const width = window.innerWidth;
+  const height = window.innerHeight * 1.6; // a bit taller
+
+  traceCanvas.width = width * dpr;
+  traceCanvas.height = height * dpr;
+  traceCanvas.style.width = '100%';
+  traceCanvas.style.height = '100%';
+
+  traceCtx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+  // map normalized points to pixel points
+  tracePoints = traceNormalizedPoints.map(p => ({
+    x: p.x * width,
+    y: p.y * height
+  }));
+}
+
+function onScrollTrace() {
+  if (!scrollTraceAnimating) {
+    scrollTraceAnimating = true;
+    requestAnimationFrame(() => {
+      drawScrollTrace();
+      scrollTraceAnimating = false;
+    });
+  }
+}
+
+function drawScrollTrace() {
+  if (!traceCanvas || !traceCtx || tracePoints.length < 2) return;
 
   const doc = document.documentElement;
   const scrollTop = window.scrollY || doc.scrollTop || 0;
   const maxScroll = (doc.scrollHeight - window.innerHeight) || 1;
   const progress = Math.min(Math.max(scrollTop / maxScroll, 0), 1);
 
-  // reveal main path along scroll
-  const offset = riverLength * (1 - progress);
-  riverMain.style.strokeDashoffset = offset;
+  const width = traceCanvas.width / (window.devicePixelRatio || 1);
+  const height = traceCanvas.height / (window.devicePixelRatio || 1);
 
-  // branches: appear mid-scroll, then disappear – gives "split and merge"
-  // 0.25–0.75 window, with soft easing
-  const branchWindowStart = 0.25;
-  const branchWindowEnd = 0.75;
-  let branchFactor = 0;
+  traceCtx.clearRect(0, 0, width, height);
 
-  if (progress <= branchWindowStart || progress >= branchWindowEnd) {
-    branchFactor = 0;
-  } else {
-    const local =
-      (progress - branchWindowStart) / (branchWindowEnd - branchWindowStart);
-    // bell-shaped curve: 0 -> 1 -> 0
-    branchFactor = 1 - Math.pow(2 * local - 1, 2);
+  const grad = traceCtx.createLinearGradient(0, 0, width, height);
+  grad.addColorStop(0.0, 'rgba(255, 181, 107, 0.05)');
+  grad.addColorStop(0.3, 'rgba(255, 159, 85, 0.25)');
+  grad.addColorStop(0.7, 'rgba(255, 159, 85, 0.55)');
+  grad.addColorStop(1.0, 'rgba(255, 181, 107, 0.08)');
+
+  traceCtx.strokeStyle = grad;
+  traceCtx.lineWidth = 2.4;
+  traceCtx.lineCap = 'round';
+  traceCtx.lineJoin = 'round';
+
+  const totalSegments = tracePoints.length - 1;
+  const segPosition = progress * totalSegments;
+  const fullSegments = Math.floor(segPosition);
+  const partialT = segPosition - fullSegments;
+
+  traceCtx.beginPath();
+  traceCtx.moveTo(tracePoints[0].x, tracePoints[0].y);
+
+  for (let i = 0; i < totalSegments; i++) {
+    const p0 = tracePoints[i];
+    const p1 = tracePoints[i + 1];
+
+    // mid-control for a soft curve
+    const cx = (p0.x + p1.x) / 2;
+    const cy = (p0.y + p1.y) / 2;
+
+    if (i < fullSegments) {
+      traceCtx.quadraticCurveTo(cx, cy, p1.x, p1.y);
+    } else if (i === fullSegments) {
+      const qx = p0.x + (p1.x - p0.x) * partialT;
+      const qy = p0.y + (p1.y - p0.y) * partialT;
+      const pcx = (p0.x + qx) / 2;
+      const pcy = (p0.y + qy) / 2;
+      traceCtx.quadraticCurveTo(pcx, pcy, qx, qy);
+      break;
+    }
   }
 
-  riverBranches.forEach((branch, index) => {
-    const phaseOffset = index / (riverBranches.length * 1.5);
-    const phase = Math.max(Math.min(branchFactor - phaseOffset, 1), 0);
-    const eased = phase * phase; // ease-in
-    branch.style.opacity = eased * 0.9;
-  });
+  traceCtx.stroke();
+
+  // small "head" dot at the current end of the line
+  const head = currentHeadPoint(progress);
+  if (head) {
+    traceCtx.beginPath();
+    traceCtx.fillStyle = 'rgba(255, 159, 85, 0.75)';
+    traceCtx.arc(head.x, head.y, 3.2, 0, Math.PI * 2);
+    traceCtx.fill();
+  }
 }
 
-function onScroll() {
-  if (!scrollAnimating) {
-    scrollAnimating = true;
-    requestAnimationFrame(() => {
-      updateScrollRiver();
-      scrollAnimating = false;
-    });
-  }
+function currentHeadPoint(progress) {
+  const totalSegments = tracePoints.length - 1;
+  const segPosition = progress * totalSegments;
+  const segIndex = Math.floor(segPosition);
+  const t = segPosition - segIndex;
+
+  if (segIndex < 0 || segIndex >= totalSegments) return null;
+
+  const p0 = tracePoints[segIndex];
+  const p1 = tracePoints[segIndex + 1];
+
+  return {
+    x: p0.x + (p1.x - p0.x) * t,
+    y: p0.y + (p1.y - p0.y) * t
+  };
 }
 
 /* ========= DOM READY ========= */
+
 document.addEventListener('DOMContentLoaded', () => {
   // start in Hebrew, RTL
   document.documentElement.lang = 'he';
@@ -403,8 +505,5 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // init features
   initWordCloud();
-  initScrollRiver();
-  updateScrollRiver(); // initial position
-
-  window.addEventListener('scroll', onScroll, { passive: true });
+  initScrollTrace();
 });
