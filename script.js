@@ -401,6 +401,11 @@ function drawScrollTrace() {
   traceCtx.lineWidth = 2.4;
   traceCtx.lineCap = 'round';
   traceCtx.lineJoin = 'round';
+    
+  // Add soft pastel glow
+  traceCtx.shadowBlur = 16;
+  traceCtx.shadowColor = 'rgba(255, 159, 85, 0.6)';
+  traceCtx.filter = 'blur(0.5px)';
 
   const totalSegments = tracePoints.length - 1;
   const segPosition = progress * totalSegments;
@@ -410,26 +415,31 @@ function drawScrollTrace() {
   traceCtx.beginPath();
   traceCtx.moveTo(tracePoints[0].x, tracePoints[0].y);
 
+    // Use smooth cubic Bezier curves for organic flow
   for (let i = 0; i < totalSegments; i++) {
     const p0 = tracePoints[i];
     const p1 = tracePoints[i + 1];
-
-    // mid-control for a soft curve
-    const cx = (p0.x + p1.x) / 2;
-    const cy = (p0.y + p1.y) / 2;
+    
+    // Create control points for smooth cubic bezier
+    const cp1x = p0.x + (p1.x - p0.x) * 0.25;
+    const cp1y = p0.y + (p1.y - p0.y) * 0.25;
+    const cp2x = p0.x + (p1.x - p0.x) * 0.75;
+    const cp2y = p0.y + (p1.y - p0.y) * 0.75;
 
     if (i < fullSegments) {
-      traceCtx.quadraticCurveTo(cx, cy, p1.x, p1.y);
+      traceCtx.bezierCurveTo(cp1x, cp1y, cp2x, cp2y, p1.x, p1.y);
     } else if (i === fullSegments) {
+      // Partial segment for smooth progressive reveal
       const qx = p0.x + (p1.x - p0.x) * partialT;
       const qy = p0.y + (p1.y - p0.y) * partialT;
-      const pcx = (p0.x + qx) / 2;
-      const pcy = (p0.y + qy) / 2;
-      traceCtx.quadraticCurveTo(pcx, pcy, qx, qy);
+      const pcp1x = p0.x + (qx - p0.x) * 0.25;
+      const pcp1y = p0.y + (qy - p0.y) * 0.25;
+      const pcp2x = p0.x + (qx - p0.x) * 0.75;
+      const pcp2y = p0.y + (qy - p0.y) * 0.75;
+      traceCtx.bezierCurveTo(pcp1x, pcp1y, pcp2x, pcp2y, qx, qy);
       break;
     }
   }
-
   traceCtx.stroke();
 
   // small "head" dot at the current end of the line
