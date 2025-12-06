@@ -77,6 +77,37 @@ body::after {
   100% { transform: translate3d(2%, -3%, 0) scale(1); }
 }
 
+/* ===== SCROLL RIVER SVG (behind everything except blobs) ===== */
+#scrollRiver {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0; /* blobs also 0, but SVG comes after in DOM so it sits on top of them */
+}
+
+.river-path {
+  fill: none;
+  stroke: rgba(255, 181, 107, 0.85);
+  stroke-width: 5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  filter: url(#riverShadow);
+  marker-end: url(#riverArrowHead);
+}
+
+.river-branch {
+  fill: none;
+  stroke: rgba(255, 181, 107, 0.7);
+  stroke-width: 3;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  opacity: 0;
+}
+
+/* ============================================================= */
+
 header {
   position: fixed;
   top: 0;
@@ -299,7 +330,7 @@ footer {
   box-shadow: 0 24px 50px rgba(255, 159, 85, 0.38);
 }
 
-/* HERO VISUAL: back to the teal, 3D-ish cloud container you liked */
+/* HERO VISUAL container */
 .hero-visual {
   height: 420px;
   border-radius: 22px;
@@ -339,8 +370,6 @@ footer {
   right: 18%;
   animation-delay: -0.7s;
 }
-
-/* NOTE: .orbital removed from the DOM so the old rectangle is gone */
 
 @keyframes float {
   0%, 100% { transform: translateY(0); }
