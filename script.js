@@ -129,7 +129,7 @@ function applyTranslations(lang) {
   });
 }
 
-// WORD CLOUD STATE
+/* ========= WORD CLOUD ========= */
 let canvas, ctx;
 const words = [
   'ferment', 'distill', 'dream', 'style', 'composition', 'palette',
@@ -297,6 +297,68 @@ function animateWordCloud() {
   });
 }
 
+/* ========= SCROLL RIVER ========= */
+let riverMain, riverLength, riverBranches;
+let scrollAnimating = false;
+
+function initScrollRiver() {
+  riverMain = document.getElementById('riverMain');
+  if (!riverMain) return;
+
+  riverBranches = Array.from(document.querySelectorAll('.river-branch'));
+
+  // compute full length and set dash array so we can "draw" it
+  riverLength = riverMain.getTotalLength();
+  riverMain.style.strokeDasharray = riverLength;
+  riverMain.style.strokeDashoffset = riverLength;
+}
+
+function updateScrollRiver() {
+  if (!riverMain) return;
+
+  const doc = document.documentElement;
+  const scrollTop = window.scrollY || doc.scrollTop || 0;
+  const maxScroll = (doc.scrollHeight - window.innerHeight) || 1;
+  const progress = Math.min(Math.max(scrollTop / maxScroll, 0), 1);
+
+  // reveal main path along scroll
+  const offset = riverLength * (1 - progress);
+  riverMain.style.strokeDashoffset = offset;
+
+  // branches: appear mid-scroll, then disappear – gives "split and merge"
+  // 0.25–0.75 window, with soft easing
+  const branchWindowStart = 0.25;
+  const branchWindowEnd = 0.75;
+  let branchFactor = 0;
+
+  if (progress <= branchWindowStart || progress >= branchWindowEnd) {
+    branchFactor = 0;
+  } else {
+    const local =
+      (progress - branchWindowStart) / (branchWindowEnd - branchWindowStart);
+    // bell-shaped curve: 0 -> 1 -> 0
+    branchFactor = 1 - Math.pow(2 * local - 1, 2);
+  }
+
+  riverBranches.forEach((branch, index) => {
+    const phaseOffset = index / (riverBranches.length * 1.5);
+    const phase = Math.max(Math.min(branchFactor - phaseOffset, 1), 0);
+    const eased = phase * phase; // ease-in
+    branch.style.opacity = eased * 0.9;
+  });
+}
+
+function onScroll() {
+  if (!scrollAnimating) {
+    scrollAnimating = true;
+    requestAnimationFrame(() => {
+      updateScrollRiver();
+      scrollAnimating = false;
+    });
+  }
+}
+
+/* ========= DOM READY ========= */
 document.addEventListener('DOMContentLoaded', () => {
   // start in Hebrew, RTL
   document.documentElement.lang = 'he';
@@ -339,6 +401,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
   document.querySelectorAll('.anim').forEach(el => observer.observe(el));
 
-  // init word cloud
+  // init features
   initWordCloud();
+  initScrollRiver();
+  updateScrollRiver(); // initial position
+
+  window.addEventListener('scroll', onScroll, { passive: true });
 });
