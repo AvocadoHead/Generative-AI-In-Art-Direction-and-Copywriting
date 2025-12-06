@@ -16,76 +16,8 @@
 </head>
 
 <body>
-  <!-- SCROLL RIVER SVG (behind content) -->
-  <svg
-    id="scrollRiver"
-    viewBox="0 0 1200 2400"
-    preserveAspectRatio="xMidYMid slice"
-    aria-hidden="true"
-  >
-    <defs>
-      <filter id="riverShadow" x="-20%" y="-20%" width="140%" height="140%">
-        <feDropShadow dx="0" dy="12" stdDeviation="16" flood-opacity="0.25" />
-      </filter>
-
-      <marker
-        id="riverArrowHead"
-        markerWidth="8"
-        markerHeight="8"
-        refX="4"
-        refY="4"
-        orient="auto"
-      >
-        <path d="M0,0 L8,4 L0,8 Z" fill="#ffb56b" />
-      </marker>
-    </defs>
-
-    <!-- main curvy “pipeline” -->
-    <path
-      id="riverMain"
-      class="river-path"
-      d="M 150 100
-         C 350 220, 260 420, 480 520
-         C 720 640, 640 880, 860 980
-         C 1080 1080, 900 1320, 660 1440
-         C 420 1560, 360 1800, 580 1900
-         C 820 2020, 760 2180, 540 2280"
-    />
-
-    <!-- 15 subtle side branches -->
-    <g id="riverBranches">
-      <path class="river-branch"
-        d="M 420 520 C 380 560, 340 600, 320 640" />
-      <path class="river-branch"
-        d="M 540 560 C 520 600, 500 640, 480 680" />
-      <path class="river-branch"
-        d="M 640 610 C 610 650, 590 690, 570 730" />
-      <path class="river-branch"
-        d="M 780 720 C 760 760, 740 800, 720 840" />
-      <path class="river-branch"
-        d="M 880 760 C 850 800, 820 840, 800 880" />
-      <path class="river-branch"
-        d="M 900 930 C 860 970, 820 1010, 800 1050" />
-      <path class="river-branch"
-        d="M 780 1060 C 750 1100, 720 1140, 700 1180" />
-      <path class="river-branch"
-        d="M 700 1240 C 670 1280, 640 1320, 620 1360" />
-      <path class="river-branch"
-        d="M 640 1440 C 610 1480, 580 1520, 560 1560" />
-      <path class="river-branch"
-        d="M 520 1500 C 490 1540, 460 1580, 440 1620" />
-      <path class="river-branch"
-        d="M 620 1700 C 590 1740, 560 1780, 545 1820" />
-      <path class="river-branch"
-        d="M 660 1800 C 635 1840, 610 1880, 595 1920" />
-      <path class="river-branch"
-        d="M 720 1900 C 690 1940, 660 1980, 640 2020" />
-      <path class="river-branch"
-        d="M 780 2000 C 750 2040, 720 2080, 700 2120" />
-      <path class="river-branch"
-        d="M 820 2100 C 790 2140, 760 2180, 740 2220" />
-    </g>
-  </svg>
+  <!-- Soft scroll trace in the background -->
+  <canvas id="scrollTrace" aria-hidden="true"></canvas>
 
   <header>
     <div class="brand-wrap">
@@ -111,6 +43,7 @@
     <!-- HERO -->
     <section class="hero anim">
       <div>
+        <!-- pill text changed as requested -->
         <div class="pill" data-i18n="hero.label">What Now</div>
         <h1 data-i18n="hero.title">Everything happens at once.</h1>
         <p data-i18n="hero.subtitle">
@@ -142,9 +75,7 @@
           <p data-i18n="shift.body2">
             This workshop moves you into a unified workflow. Forget ping-ponging
             between tools. We work on a single generative canvas, where written
-            strategy and visual output evolve side by side. It does not matter if
-            you use Krea, ComfyUI, or Runway – the real shift is in your thinking,
-            not in the tool.
+            strategy and visual output evolve side by side.
           </p>
         </div>
       </div>
@@ -290,6 +221,6 @@
     </div>
   </footer>
 
-  <script src="script.js"></script>
+  <script src="script.js" defer></script>
 </body>
 </html>
