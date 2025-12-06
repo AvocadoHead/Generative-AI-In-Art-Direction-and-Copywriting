@@ -378,8 +378,7 @@ function onScrollTrace() {
   }
 }
 
-381
-    
+function drawScrollTrace() {    
   if (!traceCanvas || !traceCtx || tracePoints.length < 2) return;
 
   const doc = document.documentElement;
