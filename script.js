@@ -378,7 +378,8 @@ function onScrollTrace() {
   }
 }
 
-function drawScrollTrace() {
+381
+    
   if (!traceCanvas || !traceCtx || tracePoints.length < 2) return;
 
   const doc = document.documentElement;
@@ -392,19 +393,13 @@ function drawScrollTrace() {
   traceCtx.clearRect(0, 0, width, height);
 
   const grad = traceCtx.createLinearGradient(0, 0, width, height);
-  grad.addColorStop(0.0, 'rgba(255, 181, 107, 0.05)');
-  grad.addColorStop(0.3, 'rgba(255, 159, 85, 0.25)');
-  grad.addColorStop(0.7, 'rgba(255, 159, 85, 0.55)');
-  grad.addColorStop(1.0, 'rgba(255, 181, 107, 0.08)');
-
-  traceCtx.strokeStyle = grad;
-  traceCtx.lineWidth = 2.4;
-  traceCtx.lineCap = 'round';
-  traceCtx.lineJoin = 'round';
+  grad.addColorStop(0.0, 'rgba(255, 218, 224, 0.4)'); // soft pink  grad.addColorStop(0.3, 'rgba(255, 159, 85, 0.25)');
+  grad.addColorStop(0.3, 'rgba(255, 210, 180, 0.5)'); // peach  
+  grad.addColorStop(1.0, 'rgba(255, 245, 235, 0.3)'); // light cream
     
   // Add soft pastel glow
   traceCtx.shadowBlur = 16;
-  traceCtx.shadowColor = 'rgba(255, 159, 85, 0.6)';
+  traceCtx.shadowColor = 'rgba(255, 200, 180, 0.7)'; // soft pastel glow
   traceCtx.filter = 'blur(0.5px)';
 
   const totalSegments = tracePoints.length - 1;
@@ -442,6 +437,18 @@ function drawScrollTrace() {
   }
   traceCtx.stroke();
 
+
+  // BRANCHING PATHS - create split effect at 40% and 70% progress
+  if (progress > 0.4) {
+    const branchProgress = Math.min((progress - 0.4) / 0.3, 1);
+    drawBranch(branchProgress, 0.4);
+  }
+  
+  if (progress > 0.7) {
+    const branchProgress = Math.min((progress - 0.7) / 0.25, 1);
+    drawBranch(branchProgress, 0.7, true);
+  }
+
   // small "head" dot at the current end of the line
   const head = currentHeadPoint(progress);
   if (head) {
@@ -450,6 +457,33 @@ function drawScrollTrace() {
     traceCtx.arc(head.x, head.y, 3.2, 0, Math.PI * 2);
     traceCtx.fill();
   }
+}
+
+
+// Helper: draw branching paths
+function drawBranch(progress, startProgress, reverse = false) {
+  const startIdx = Math.floor(startProgress * (tracePoints.length - 1));
+  const branchLength = 4;
+  const offset = reverse ? -60 : 60;
+  
+  traceCtx.save();
+  traceCtx.globalAlpha = 0.6;
+  traceCtx.lineWidth = 2;
+  traceCtx.shadowBlur = 15;
+  
+  traceCtx.beginPath();
+  const start = tracePoints[startIdx];
+  traceCtx.moveTo(start.x, start.y);
+  
+  for (let i = 0; i < branchLength && progress > i / branchLength; i++) {
+    const t = i / (branchLength - 1);
+    const idx = Math.min(startIdx + i, tracePoints.length - 1);
+    const p = tracePoints[idx];
+    traceCtx.lineTo(p.x + offset * t, p.y);
+  }
+  
+  traceCtx.stroke();
+  traceCtx.restore();
 }
 
 function currentHeadPoint(progress) {
