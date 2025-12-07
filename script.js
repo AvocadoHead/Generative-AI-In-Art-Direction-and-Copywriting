@@ -392,13 +392,12 @@ function drawScrollTrace() {
   traceCtx.clearRect(0, 0, width, height);
 
   // Describe a few flowing pastel paths
+  // Create 3 flowing parallel paths with harmonious colors
   const paths = [
-    { color: 'rgba(255, 192, 203, 0.5)', offset: 0,   splits: [0.3, 0.7] },   // soft pink
-    { color: 'rgba(221, 160, 221, 0.45)', offset: 50,  splits: [0.4, 0.8] },  // lavender
-    { color: 'rgba(176, 224, 230, 0.5)', offset: -40,  splits: [0.25, 0.65] },// powder blue
-    { color: 'rgba(255, 218, 185, 0.5)', offset: 30,   splits: [0.35, 0.75] } // peach
+    { color: 'rgba(255, 200, 210, 0.6)', offset: -25, splits: [0.35, 0.75] },  // soft rose
+    { color: 'rgba(200, 220, 255, 0.55)', offset: 0,   splits: [0.45, 0.82] },  // powder blue
+    { color: 'rgba(240, 210, 255, 0.5)', offset: 25,  splits: [0.28, 0.68] }   // lavender
   ];
-
   const totalSegments = tracePoints.length - 1;
   const visibleProgress = Math.min(progress * 1.2, 1); // slightly ahead reveal
   const segPosition = visibleProgress * totalSegments;
@@ -430,9 +429,9 @@ function drawScrollTrace() {
       const perpX = -dy / dist;
       const perpY = dx / dist;
 
-      const waveOffset =
-        Math.sin((i / totalSegments) * Math.PI * 3 + pathIndex) * dist * 0.2;
-
+      // Gentle organic wave - smoother and more fluid
+      const waveOffset = 
+        Math.sin((i / totalSegments) * Math.PI * 1.5 + pathIndex * 0.5) * dist * 0.12;
       const cp1x = p0.x + dx * 0.33 + perpX * waveOffset + baseOffset;
       const cp1y = p0.y + dy * 0.33 + perpY * waveOffset;
       const cp2x = p0.x + dx * 0.66 + perpX * waveOffset + baseOffset;
