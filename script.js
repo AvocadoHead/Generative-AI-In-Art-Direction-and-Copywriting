@@ -300,7 +300,7 @@ function animateWordCloud() {
   });
 }
 
-/* ========= SCROLL TRACE (random pastel path) ========= */
+/* ========= SCROLL TRACE (random pastel multi-path) ========= */
 
 let traceCanvas, traceCtx;
 let tracePoints = [];
@@ -379,12 +379,11 @@ function onScrollTrace() {
 }
 
 function drawScrollTrace() {
-    // === COMPLETELY NEW BEAUTIFUL ORGANIC SCROLL TRACE ===/
   if (!traceCanvas || !traceCtx || tracePoints.length < 2) return;
 
-  const doc = document.documentElement;
-  const scrollTop = window.scrollY || doc.scrollTop || 0;
-  const maxScroll = (doc.scrollHeight - window.innerHeight) || 1;
+  const root = document.documentElement;
+  const scrollTop = window.scrollY || root.scrollTop || 0;
+  const maxScroll = (root.scrollHeight - window.innerHeight) || 1;
   const progress = Math.min(Math.max(scrollTop / maxScroll, 0), 1);
 
   const width = traceCanvas.width / (window.devicePixelRatio || 1);
@@ -392,16 +391,21 @@ function drawScrollTrace() {
 
   traceCtx.clearRect(0, 0, width, height);
 
-  // Create multiple parallel flowing paths with pastel colors
+  // Describe a few flowing pastel paths
   const paths = [
-    { color: 'rgba(255, 192, 203, 0.5)', offset: 0, splits: [0.3, 0.7] },      // soft pink
-    { color: 'rgba(221, 160, 221, 0.45)', offset: 50, splits: [0.4, 0.8] },    // plum/lavender
-    { color: 'rgba(176, 224, 230, 0.5)', offset: -40, splits: [0.25, 0.65] },  // powder blue
-    { color: 'rgba(255, 218, 185, 0.5)', offset: 30, splits: [0.35, 0.75] }    // peach
+    { color: 'rgba(255, 192, 203, 0.5)', offset: 0,   splits: [0.3, 0.7] },   // soft pink
+    { color: 'rgba(221, 160, 221, 0.45)', offset: 50,  splits: [0.4, 0.8] },  // lavender
+    { color: 'rgba(176, 224, 230, 0.5)', offset: -40,  splits: [0.25, 0.65] },// powder blue
+    { color: 'rgba(255, 218, 185, 0.5)', offset: 30,   splits: [0.35, 0.75] } // peach
   ];
 
+  const totalSegments = tracePoints.length - 1;
+  const visibleProgress = Math.min(progress * 1.2, 1); // slightly ahead reveal
+  const segPosition = visibleProgress * totalSegments;
+  const fullSegments = Math.floor(segPosition);
+  const partialT = segPosition - fullSegments;
+
   paths.forEach((pathConfig, pathIndex) => {
-    // Draw main path with organic Bezier curves
     traceCtx.save();
     traceCtx.strokeStyle = pathConfig.color;
     traceCtx.lineWidth = 2.5 + Math.sin(progress * Math.PI) * 0.5;
@@ -409,32 +413,25 @@ function drawScrollTrace() {
     traceCtx.shadowColor = pathConfig.color;
     traceCtx.filter = 'blur(0.5px)';
 
-    const visibleProgress = Math.min(progress * 1.2, 1); // slightly ahead reveal
-    const totalSegments = tracePoints.length - 1;
-    const segPosition = visibleProgress * totalSegments;
-    const fullSegments = Math.floor(segPosition);
-    const partialT = segPosition - fullSegments;
+    const baseOffset = pathConfig.offset;
 
     traceCtx.beginPath();
-    traceCtx.moveTo(tracePoints[0].x + pathConfig.offset, tracePoints[0].y);
+    traceCtx.moveTo(tracePoints[0].x + baseOffset, tracePoints[0].y);
 
-    // Draw organic Bezier curves
     for (let i = 0; i < totalSegments; i++) {
       if (i >= fullSegments + 1) break;
 
       const p0 = tracePoints[i];
       const p1 = tracePoints[i + 1];
 
-      // Create smooth control points with perpendicular offset
       const dx = p1.x - p0.x;
       const dy = p1.y - p0.y;
-      const dist = Math.sqrt(dx * dx + dy * dy);
+      const dist = Math.sqrt(dx * dx + dy * dy) || 1;
       const perpX = -dy / dist;
       const perpY = dx / dist;
 
-      // Organic wave pattern
-      const waveOffset = Math.sin((i / totalSegments) * Math.PI * 3 + pathIndex) * dist * 0.2;
-      const baseOffset = pathConfig.offset;
+      const waveOffset =
+        Math.sin((i / totalSegments) * Math.PI * 3 + pathIndex) * dist * 0.2;
 
       const cp1x = p0.x + dx * 0.33 + perpX * waveOffset + baseOffset;
       const cp1y = p0.y + dy * 0.33 + perpY * waveOffset;
@@ -444,7 +441,6 @@ function drawScrollTrace() {
       if (i < fullSegments) {
         traceCtx.bezierCurveTo(cp1x, cp1y, cp2x, cp2y, p1.x + baseOffset, p1.y);
       } else if (i === fullSegments) {
-        // Partial segment
         const qx = p0.x + dx * partialT;
         const qy = p0.y + dy * partialT;
         const pcp1x = p0.x + (qx - p0.x) * 0.33 + perpX * waveOffset + baseOffset;
@@ -458,28 +454,31 @@ function drawScrollTrace() {
 
     traceCtx.stroke();
 
-    // Draw SPLIT/MERGE branches at defined points
+    // SPLIT / MERGE effects
     pathConfig.splits.forEach(splitPoint => {
       if (progress > splitPoint) {
         const splitProgress = Math.min((progress - splitPoint) / 0.15, 1);
-        const splitIdx = Math.floor(splitPoint * (tracePoints.length - 1));
-        
-        if (splitIdx < tracePoints.length - 3) {
+        const splitIdx = Math.floor(splitPoint * totalSegments);
+
+        if (splitIdx < totalSegments - 2) {
           traceCtx.beginPath();
           traceCtx.globalAlpha = 0.6 * splitProgress;
           traceCtx.lineWidth = 2;
 
           const start = tracePoints[splitIdx];
-          const branchOffset = (pathIndex % 2 === 0 ? 80 : -80) * splitProgress;
-          
-          traceCtx.moveTo(start.x + pathConfig.offset, start.y);
-          
-          // Create branching curve
+          const branchOffset =
+            (pathIndex % 2 === 0 ? 80 : -80) * splitProgress;
+
+          traceCtx.moveTo(start.x + baseOffset, start.y);
+
           for (let j = 0; j < 4 && splitIdx + j < tracePoints.length; j++) {
             const t = j / 3;
             const p = tracePoints[splitIdx + j];
             const curveOffset = Math.sin(t * Math.PI) * branchOffset;
-            traceCtx.lineTo(p.x + pathConfig.offset + curveOffset, p.y);
+            traceCtx.lineTo(
+              p.x + baseOffset + curveOffset,
+              p.y
+            );
           }
 
           traceCtx.stroke();
@@ -490,43 +489,20 @@ function drawScrollTrace() {
     traceCtx.restore();
   });
 
-  // Draw glowing head dots for each path
-  paths.forEach((pathConfig, idx) => {
-    const head = currentHeadPoint(progress);
-    if (head && progress > 0.05) {
+  // glowing head dots
+  const head = currentHeadPoint(progress);
+  if (head && progress > 0.05) {
+    paths.forEach(pathConfig => {
       traceCtx.beginPath();
-      traceCtx.fillStyle = pathConfig.color.replace('0.5)', '0.9)');
+      // bump alpha to ~0.9 for the dot
+      const dotColor = pathConfig.color.replace('0.5)', '0.9)').replace('0.45)', '0.9)');
+      traceCtx.fillStyle = dotColor;
       traceCtx.shadowBlur = 8;
       traceCtx.shadowColor = pathConfig.color;
       traceCtx.arc(head.x + pathConfig.offset, head.y, 3.5, 0, Math.PI * 2);
       traceCtx.fill();
-    }
-  });
-
-// Helper: draw branching paths
-function drawBranch(progress, startProgress, reverse = false) {
-  const startIdx = Math.floor(startProgress * (tracePoints.length - 1));
-  const branchLength = 4;
-  const offset = reverse ? -60 : 60;
-  
-  traceCtx.save();
-  traceCtx.globalAlpha = 0.6;
-  traceCtx.lineWidth = 2;
-  traceCtx.shadowBlur = 15;
-  
-  traceCtx.beginPath();
-  const start = tracePoints[startIdx];
-  traceCtx.moveTo(start.x, start.y);
-  
-  for (let i = 0; i < branchLength && progress > i / branchLength; i++) {
-    const t = i / (branchLength - 1);
-    const idx = Math.min(startIdx + i, tracePoints.length - 1);
-    const p = tracePoints[idx];
-    traceCtx.lineTo(p.x + offset * t, p.y);
+    });
   }
-  
-  traceCtx.stroke();
-  traceCtx.restore();
 }
 
 function currentHeadPoint(progress) {
