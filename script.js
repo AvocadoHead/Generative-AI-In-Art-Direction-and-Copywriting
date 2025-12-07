@@ -414,23 +414,38 @@ function drawScrollTrace() {
     const p0 = tracePoints[i];
     const p1 = tracePoints[i + 1];
     
-    // Create control points for smooth cubic bezier
-    const cp1x = p0.x + (p1.x - p0.x) * 0.25;
-    const cp1y = p0.y + (p1.y - p0.y) * 0.25;
-    const cp2x = p0.x + (p1.x - p0.x) * 0.75;
-    const cp2y = p0.y + (p1.y - p0.y) * 0.75;
-
+      // Create control points for smooth organic cubic bezier with perpendicular offset
+      const dx = p1.x - p0.x;
+      const dy = p1.y - p0.y;
+      const dist = Math.sqrt(dx * dx + dy * dy);
+      
+      // Perpendicular vector for smooth curves
+      const perpX = -dy / dist;
+      const perpY = dx / dist;
+      
+      // Alternating offset for organic snaking pattern
+      const offset = (i % 2 === 0 ? 1 : -1) * dist * 0.15;
+      
+      const cp1x = p0.x + dx * 0.33 + perpX * offset;
+      const cp1y = p0.y + dy * 0.33 + perpY * offset;
+      const cp2x = p0.x + dx * 0.66 + perpX * offset;
+      const cp2y = p0.y + dy * 0.66 + perpY * offset;
     if (i < fullSegments) {
       traceCtx.bezierCurveTo(cp1x, cp1y, cp2x, cp2y, p1.x, p1.y);
     } else if (i === fullSegments) {
       // Partial segment for smooth progressive reveal
-      const qx = p0.x + (p1.x - p0.x) * partialT;
-      const qy = p0.y + (p1.y - p0.y) * partialT;
-      const pcp1x = p0.x + (qx - p0.x) * 0.25;
-      const pcp1y = p0.y + (qy - p0.y) * 0.25;
-      const pcp2x = p0.x + (qx - p0.x) * 0.75;
-      const pcp2y = p0.y + (qy - p0.y) * 0.75;
-      traceCtx.bezierCurveTo(pcp1x, pcp1y, pcp2x, pcp2y, qx, qy);
+      // Partial segment for smooth progressive reveal
+      const qdx = qx - p0.x;
+      const qdy = qy - p0.y;
+      const qdist = Math.sqrt(qdx * qdx + qdy * qdy);
+      const qperpX = -qdy / qdist;
+      const qperpY = qdx / qdist;
+      const qoffset = (i % 2 === 0 ? 1 : -1) * qdist * 0.15;
+      
+      const pcp1x = p0.x + qdx * 0.33 + qperpX * qoffset;
+      const pcp1y = p0.y + qdy * 0.33 + qperpY * qoffset;
+      const pcp2x = p0.x + qdx * 0.66 + qperpX * qoffset;
+      const pcp2y = p0.y + qdy * 0.66 + qperpY * qoffset;      traceCtx.bezierCurveTo(pcp1x, pcp1y, pcp2x, pcp2y, qx, qy);
       break;
     }
   }
