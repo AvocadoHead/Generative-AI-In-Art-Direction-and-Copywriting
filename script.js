@@ -415,6 +415,8 @@ function drawScrollTrace() {
     const p1 = tracePoints[i + 1];
     
       // Create control points for smooth organic cubic bezier with perpendicular offset
+      traceCtx.lineWidth = 2.5;
+  traceCtx.strokeStyle = grad;
       const dx = p1.x - p0.x;
       const dy = p1.y - p0.y;
       const dist = Math.sqrt(dx * dx + dy * dy);
